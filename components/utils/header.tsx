@@ -23,7 +23,14 @@ const headingVariants = cva("leading-tight tracking-tight font-light", {
   },
 });
 
-function Heading({ as, className, size, ...props }) {
+import { VariantProps } from "class-variance-authority";
+import React from "react";
+
+interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement>, VariantProps<typeof headingVariants> {
+  as?: React.ElementType;
+}
+
+function Heading({ as, className, size, ...props }: HeadingProps) {
   const Comp = as || "h6";
 
   return (

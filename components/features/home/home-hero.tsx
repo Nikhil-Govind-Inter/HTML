@@ -1,92 +1,137 @@
+"use client";
+
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Heading } from "@/components/utils/header";
 import Image from "next/image";
 import parse from "html-react-parser";
-const sliderImages = [
-  {
-    src: "/Images/Health Screening 1.jpg",
-    alt: "Slider Image 1",
-  },
-  {
-    src: "/Images/Orthopaedic 1.jpg",
-    alt: "Slider Image 2",
-  },
-  {
-    src: "/Images/Ophthalmology 1.jpg",
-    alt: "Slider Image 3",
-  },
-  {
-    src: "/Images/Neurology 1.jpg",
-    alt: "Slider Image 4",
-  },
-  {
-    src: "/Images/Pediatrics 1.jpg",
-    alt: "Slider Image 5",
-  },
-];
 
-type homeHeroData = {
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
+
+type Slide = {
   media: {
-    type: string;
+    type: "image" | "video";
     path: string;
-    mobile_path: string;
+    mobile_path?: string;
+    poster?: string;
     alt: string;
   };
   title: string;
   description: string;
 };
 
-export default function HomeHero({ data }: { data: homeHeroData }) {
+export default function HomeHero({ slides }: { slides: Slide[] }) {
+  const AUTOPLAY_DELAY = 4000;
+
+  const [progress, setProgress] = useState(1);
+
+  const autoplay = useRef(
+    Autoplay({
+      delay: AUTOPLAY_DELAY,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true, // UX improvement
+    }),
+  );
+
+  const onScroll = useCallback((emblaApi: any) => {
+    const scrollProgress = Math.max(0, Math.min(1, emblaApi.scrollProgress()));
+    setProgress(scrollProgress * 100);
+  }, []);
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: false,
+      align: "start",
+    },
+    [autoplay.current],
+  );
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    emblaApi.on("scroll", onScroll);
+    emblaApi.on("reInit", onScroll);
+
+    return () => {
+      emblaApi.off("scroll", onScroll);
+      emblaApi.off("reInit", onScroll);
+    };
+  }, [emblaApi, onScroll]);
+
   return (
-    <section className="w-full h-full relative">
-      <div className="absolute inset-0 w-full h-full bg-black/40 z-1"></div>
-      <div className="w-full aspect-[16/9] -z-1 md:aspect-[21/7] h-screen md:h-auto relative">
-        {data?.media?.type === "video" ? (
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full h-full object-cover"
-          >
-            <source src={data?.media?.path} type="video/mp4" />
-          </video>
-        ) : (
-          <>
-            <div className="max-sm:hidden absolute inset-0">
-              <Image
-                src={data?.media?.path}
-                alt={data?.media?.alt}
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-
-            <div className="md:hidden absolute inset-0">
-              <Image
-                src={data?.media?.mobile_path}
-                alt={data?.media?.alt}
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-          </>
-        )}
+    <section className="relative w-full h-[500px] md:h-[700px] overflow-hidden">
+      <div className="absolute bottom-6 right-6 z-30">
+        <div className="w-[120px] h-[4px] bg-white/20 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-white rounded-full"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
       </div>
+      {/* Carousel */}
+      <div className="embla h-full" ref={emblaRef}>
+        <div className="flex h-full">
+          {slides?.map((slide, index) => (
+            <div key={index} className="relative flex-[0_0_100%] h-full">
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-black/40 z-10" />
 
-      <div className="absolute z-10 text-white w-full h-full max-md:top-0 max-md:left-0 bottom-[-100px] max-md:flex max-md:items-center text-center max-md:justify-center">
-        <div className="container mx-auto px-4">
-          <Heading
-            as="h1"
-            size="heading1"
-            className="line-clamp-4 leading-tight mb-2 xl:mb-3 2xl:mb-4"
-          >
-            {data?.title}
-          </Heading>
-          <div className="text-[8px] xl:text-[10px] 2xl:text-[12px]">
-            {parse(data?.description)}
-          </div>
+              {/* Media */}
+              {slide.media.type === "video" ? (
+                <video
+                  poster={slide.media.poster}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                >
+                  <source src={slide.media.path} type="video/mp4" />
+                </video>
+              ) : (
+                <>
+                  {/* Desktop */}
+                  <div className="hidden md:block absolute inset-0">
+                    <Image
+                      src={slide.media.path}
+                      alt={slide.media.alt}
+                      fill
+                      className="object-cover"
+                      priority={index === 0}
+                    />
+                  </div>
+
+                  {/* Mobile */}
+                  <div className="block md:hidden absolute inset-0">
+                    <Image
+                      src={slide.media.mobile_path || slide.media.path}
+                      alt={slide.media.alt}
+                      fill
+                      className="object-cover"
+                      priority={index === 0}
+                    />
+                  </div>
+                </>
+              )}
+
+              {/* Content */}
+              <div className="absolute z-20 text-white w-full h-full flex items-center justify-center text-center px-4">
+                <div className="container mx-auto">
+                  <Heading
+                    as="h1"
+                    size="heading1"
+                    className="leading-tight mb-3"
+                  >
+                    {slide.title}
+                  </Heading>
+
+                  <div className="text-xs md:text-sm lg:text-base">
+                    {parse(slide.description)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

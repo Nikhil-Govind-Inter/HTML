@@ -25,13 +25,12 @@ export default function FooterLinks({ title, links }: Props): JSX.Element {
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
       >
-        <Heading as="h3" size="h3" className="text-white font-medium text-[12px] lg:text-[14px] xl:text-[16px] 2xl:text-[18px] leading-none">
+        <Heading as="h3" size="heading3" className="text-white font-medium text-[12px] lg:text-[14px] xl:text-[16px] 2xl:text-[18px] leading-none">
           {title}
         </Heading>
         <svg
-          className={`w-4 h-4 text-white transition-transform duration-300 ${
-            isOpen ? "rotate-180" : "rotate-0"
-          }`}
+          className={`w-4 h-4 text-white transition-transform duration-300 ${isOpen ? "rotate-180" : "rotate-0"
+            }`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -41,7 +40,7 @@ export default function FooterLinks({ title, links }: Props): JSX.Element {
       </button>
 
       {/* Desktop: always visible title */}
-      <Heading as={"h3"} size="h3" className="hidden md:block text-white font-medium mb-4 text-[12px] xl:text-[12px] 2xl:text-[14px] 3xl:text-[18px] leading-none">
+      <Heading as={"h3"} size="heading3" className="hidden md:block text-white font-medium mb-4 text-[12px] xl:text-[12px] 2xl:text-[14px] 3xl:text-[18px] leading-none">
         {title}
       </Heading>
 
