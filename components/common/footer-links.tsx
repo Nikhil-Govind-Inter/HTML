@@ -25,7 +25,7 @@ export default function FooterLinks({ title, links }: Props): JSX.Element {
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
       >
-        <Heading as="h3" size="heading3" className="text-white font-medium text-[12px] lg:text-[14px] xl:text-[16px] 2xl:text-[18px] leading-none">
+        <Heading as="h3" size="heading3" className="text-white font-medium leading-none">
           {title}
         </Heading>
         <svg

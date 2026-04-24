@@ -8,13 +8,13 @@ import parse from "html-react-parser";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 
-type Slide = {
+type Slide  = {
   media: {
     type: "image" | "video";
-    path: string;
-    mobile_path?: string;
-    poster?: string;
-    alt: string;
+    desktop_path: string;
+    mobile_path: string;
+    poster: string;
+    media_alt: string;
   };
   title: string;
   description: string;
@@ -59,13 +59,16 @@ export default function HomeHero({ slides }: { slides: Slide[] }) {
   }, [emblaApi, onScroll]);
 
   return (
-    <section className="relative w-full h-[500px] md:h-[700px] overflow-hidden">
+    <section className="relative w-full h-[500px] sm:h-[75vh] md:h-[calc(100vh-70px)] overflow-hidden">
+      <div className="container mx-auto">
       <div className="absolute bottom-6 right-6 z-30">
         <div className="w-[120px] h-[4px] bg-white/20 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-white rounded-full"
-            style={{ width: `${progress}%` }}
-          />
+
+            <div
+              className="h-full bg-white rounded-full"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
         </div>
       </div>
       {/* Carousel */}
@@ -77,24 +80,24 @@ export default function HomeHero({ slides }: { slides: Slide[] }) {
               <div className="absolute inset-0 bg-black/40 z-10" />
 
               {/* Media */}
-              {slide.media.type === "video" ? (
+              {slide?.media?.type === "video" ? (
                 <video
-                  poster={slide.media.poster}
+                  poster={slide?.media?.poster}
                   autoPlay
                   muted
                   loop
                   playsInline
                   className="w-full h-full object-cover"
                 >
-                  <source src={slide.media.path} type="video/mp4" />
+                  <source src={slide?.media?.desktop_path} type="video/mp4" />
                 </video>
               ) : (
                 <>
                   {/* Desktop */}
                   <div className="hidden md:block absolute inset-0">
                     <Image
-                      src={slide.media.path}
-                      alt={slide.media.alt}
+                      src={slide?.media?.desktop_path}
+                      alt={slide?.media?.media_alt}
                       fill
                       className="object-cover"
                       priority={index === 0}
@@ -104,8 +107,8 @@ export default function HomeHero({ slides }: { slides: Slide[] }) {
                   {/* Mobile */}
                   <div className="block md:hidden absolute inset-0">
                     <Image
-                      src={slide.media.mobile_path || slide.media.path}
-                      alt={slide.media.alt}
+                      src={slide?.media?.mobile_path}
+                      alt={slide?.media?.media_alt}
                       fill
                       className="object-cover"
                       priority={index === 0}
@@ -122,11 +125,11 @@ export default function HomeHero({ slides }: { slides: Slide[] }) {
                     size="heading1"
                     className="leading-tight mb-3"
                   >
-                    {slide.title}
+                    {slide?.title}
                   </Heading>
 
                   <div className="text-xs md:text-sm lg:text-base">
-                    {parse(slide.description)}
+                    {parse(slide?.description)}
                   </div>
                 </div>
               </div>

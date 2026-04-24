@@ -2,17 +2,15 @@ import HomeHero from "@/components/features/home/home-hero";
 import HomeSlider from "@/components/features/home/home-slider";
 
 
-
-
 const localData = {
   home_hero: [
     {
       media: {
         type: "image" as const,
-        path: "/Images/Neurology 1.jpg",
+        desktop_path: "/Images/Neurology 1.jpg",
         mobile_path: "/Images/Orthopaedic 1.jpg",
         poster: "/Images/Orthopaedic 1.jpg",
-        alt: "Neurology"
+        media_alt: "Neurology"
       },
       title: "Welcome to Our Clinic",
       description: `<p>Providing quality healthcare services for you and your family.</p>`
@@ -20,10 +18,10 @@ const localData = {
     {
       media: {
         type: "image" as const,
-        path: "/Images/Mental Health 1.jpg",
+        desktop_path: "/Images/Mental Health 1.jpg",
         mobile_path: "/Images/Orthopaedic 1.jpg",
         poster: "/Images/Mental Health 1.jpg",
-        alt: "Mental Health"
+        media_alt: "Mental Health"
       },
       title: "Welcome to Our Clinic",
       description: `<p>Providing quality healthcare services for you and your family.</p>`
@@ -31,10 +29,10 @@ const localData = {
     {
       media: {
         type: "image" as const,
-        path: "/Images/Health Screening 1.jpg",
+        desktop_path: "/Images/Health Screening 1.jpg",
         mobile_path: "/Images/Mental Health 1.jpg",
         poster: "/Images/Mental Health 1.jpg",
-        alt: "Mental Health"
+        media_alt: "Mental Health"
       },
       title: "Welcome to Our Clinic",
       description: `<p>Providing quality healthcare services for you and your family.</p>`
@@ -42,10 +40,10 @@ const localData = {
     {
       media: {
         type: "image" as const,
-        path: "/Images/Pediatrics 1.jpg",
+        desktop_path: "/Images/Pediatrics 1.jpg",
         mobile_path: "/Images/Health Screening 1.jpg",
         poster: "/Images/Orthopaedic 1.jpg",
-        alt: "Neurology"
+        media_alt: "Neurology"
       },
       title: "Welcome to Our Clinic",
       description: `<p>Providing quality healthcare services for you and your family.</p>`
@@ -53,10 +51,10 @@ const localData = {
     {
       media: {
         type: "image" as const,
-        path: "/Images/Ophthalmology 1.jpg",
+        desktop_path: "/Images/Ophthalmology 1.jpg",
         mobile_path: "/Images/Pediatrics 1.jpg",
         poster: "/Images/Pediatrics 1.jpg",
-        alt: "Neurology"
+        media_alt: "Neurology"
       },
       title: "Welcome to Our Clinic",
       description: `<p>Providing quality healthcare services for you and your family.</p>`
@@ -66,43 +64,43 @@ const localData = {
   home_cards: [
     {
       media: {
-        path: "/Images/Orthopaedic 1.jpg",
-        alt: "Orthopaedic",
+        media_path: "/Images/Orthopaedic 1.jpg",
+        media_alt: "Orthopaedic",
       },
       title: "Orthopaedic"
     },
     {
       media: {
-        path: "/Images/Neurology 1.jpg",
-        alt: "Neurology",
+        media_path: "/Images/Neurology 1.jpg",
+        media_alt: "Neurology",
       },
       title: "Neurology"
     },
     {
       media: {
-        path: "/Images/Mental Health 1.jpg",
-        alt: "Mental Health",
+        media_path: "/Images/Mental Health 1.jpg",
+        media_alt: "Mental Health",
       },
       title: "Mental Health"
     },
     {
       media: {
-        path: "/Images/Health Screening 1.jpg",
-        alt: "Health Screening",
+        media_path: "/Images/Health Screening 1.jpg",
+        media_alt: "Health Screening",
       },
       title: "Health Screening"
     },
     {
       media: {
-        path: "/Images/Pediatrics 1.jpg",
-        alt: "Pediatrics",
+        media_path: "/Images/Pediatrics 1.jpg",
+        media_alt: "Pediatrics",
       },
       title: "Pediatrics"
     },
     {
       media: {
-        path: "/Images/Ophthalmology 1.jpg",
-        alt: "Ophthalmology",
+        media_path: "/Images/Ophthalmology 1.jpg",
+        media_alt: "Ophthalmology",
       },
       title: "Ophthalmology"
     },

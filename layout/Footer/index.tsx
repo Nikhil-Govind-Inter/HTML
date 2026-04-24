@@ -6,42 +6,54 @@ import Image from "next/image";
 
 import parse from "html-react-parser";
 import Newsletter from "@/components/common/newsletter";
+import { Heading } from "@/components/utils/header";
+import { Button } from "@/components/ui/button";
 
-const FacebookIcon = "/Images/facebook-svgrepo-com.svg";
-const localData = {
-  address: `<p>
-            123 Business Street <br />
-            Trichur, Kerala, India <br />
-            PIN: 680001
-          </p>`,
 
-  socilaMedia: [
-    {
-      icon: "/Images/social-fb.svg",
-      link: "https://www.facebook.com/myapp",
-      title: "Facebook",
-    },
-    {
-      icon: "/Images/social-youtube.svg",
-      link: "https://youtube.com",
-      title: "Youtube",
-    },
-    {
-      icon: "/Images/social-insta.svg",
-      link: "https://www.instagram.com/myapp",
-      title: "Instagram",
-    },
-    {
-      icon: "/Images/social-linkedin.svg",
-      link: "https://www.linkedin.com/myapp",
-      title: "Linkedin",
-    },
-  ],
-  email: "support@myapp.com",
-  phone: "+91 98765 43210",
+
+type socialMedia = {
+  icon: string,
+  link: string,
+  title: string,
+}
+
+type links = {
+  label: string,
+  href: string,
+}
+
+type footerLinks = {
+  title: string,
+  links: links[],
+}
+
+type footer = {
+  logo: {
+    media_path: string,
+    media_alt: string,
+  },
+  address: string,
+  socilaMedia: socialMedia[],
+  email: string,
+  phone: string,
+
+  footerLinks: footerLinks[],
 };
 
-export default function Footer(): JSX.Element {
+type footerProps = {
+  data: footer,
+}
+
+
+
+
+
+export default function Footer({ data }: footerProps): JSX.Element {
+
+
+
+
+
   return (
     <footer className="w-full h-full bg-gray-900 text-gray-300" >
       <div className="container mx-auto">
@@ -51,78 +63,72 @@ export default function Footer(): JSX.Element {
             <Image
               width={50}
               height={50}
-              src="/Images/logo.png"
-              alt="MyApp Logo"
+              src={data?.logo?.media_path}
+              alt={data?.logo?.media_alt}
               className="w-auto"
             />
             <div className="max-sm:text-[12px] sm:text-[14px] xl:text-[16px]">
-              {parse(localData?.address)}{" "}
+              {parse(data?.address)}
             </div>
 
             <p className="mt-4 text-[12px]">
-              Email: {localData?.email} <br />
-              Phone: {localData?.phone}
+              Email: {data?.email} <br />
+              Phone: {data?.phone}
             </p>
           </div>
 
-          <div className="w-full md:w-[44%]">
-            {/* Links Sections */}
-            <FooterLinks
-              title="Company"
-              links={[
-                { label: "About Us", href: "/" },
-                { label: "Careers", href: "/" },
-                { label: "Blog", href: "/" },
-              ]}
-            />
-          </div>
-          <div className="w-full md:w-[44%]">
-            <FooterLinks
-              title="Support"
-              links={[
-                { label: "Contact", href: "/" },
-                { label: "Help Center", href: "/" },
-                { label: "Privacy Policy", href: "/" },
-              ]}
-            />
-          </div>
-          {/* Social Media */}
-          <div>
-            <h3 className="text-white mb-4">Follow Us</h3>
-            <div className="flex gap-[12px]">
-              {localData.socilaMedia.map((social, index) => (
-                <Link
-                  key={index}
-                  href={social.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Image
-                    width={35}
-                    height={35}
-                    src={social.icon}
-                    alt={social?.title}
-                    className=" hover:text-white transition w-[15px] lg:w-[13px] xl:w-[15px] 2xl:w-[17px] aspect-square hover:scale-110"
+
+          {
+            data?.footerLinks?.map((item, index) => {
+              return (
+                <div key={index} className="w-full md:w-[44%]">
+                  {/* Links Sections */}
+                  <FooterLinks
+                    title={item?.title}
+                    links={item?.links}
                   />
-                </Link>
+                </div>
+              )
+            })
+          }
+          {/* Social Media */ }
+              < div >
+            <Heading as={"h3"} size={"heading3"} className="text-white mb-4">Follow Us</Heading>
+            <div className="flex gap-[6px]">
+              {data.socilaMedia.map((social, index) => (
+                <Button key={index} variant={"link"} className="p-0">
+                  <Link
+                    href={social.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Image
+                      width={40}
+                      height={40}
+                      src={social.icon}
+                      alt={social?.title}
+                      className=" hover:text-white block aspect-square transition w-[20px] lg:w-[22px] xl:w-[24px] 2xl:w-[26px] hover:scale-110"
+                    />
+                  </Link>
+                </Button>
               ))}
             </div>
           </div>
-        </div>
-        <Newsletter />
+      </div>
+      <Newsletter />
 
-        {/* Bottom Bar */}
-        <div className="border-t border-gray-700 py-4">
-          <div className="mx-auto px-4 flex justify-between items-center text-[12px] lg:text-[14px] xl:text-[16px]">
-            <p>© {new Date().getFullYear()} MyApp. All rights reserved.</p>
+      {/* Bottom Bar */}
+      <div className="border-t border-gray-700 py-4 text-[12px] lg:text-[14px] xl:text-[16px]">
+        <div className="mx-auto px-4 flex justify-between items-center">
+          <p>© {new Date().getFullYear()} MyApp. All rights reserved.</p>
 
-            <p className="text-[8px] lg:text-[10px] xl:text-[12px]">
-              Designed & Developed by{" "}
-              <span className="text-white font-medium">Your Company</span>
-            </p>
-          </div>
+          <p>
+            Designed & Developed by{" "}
+            <span className="text-white font-medium">Your Company</span>
+          </p>
         </div>
       </div>
-    </footer>
+    </div>
+    </footer >
   );
 }

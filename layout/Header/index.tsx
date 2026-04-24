@@ -10,37 +10,33 @@ import { JSX, useEffect, useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-type NavLInks = {
-  href: string;
-  label: string;
-};
 
-const localData = {
-  logo: {
-    media: "/Images/logo.png",
-    alt: "Logo Alt Text",
-  },
-  links: [
-    { href: "/", label: "Home" },
-    { href: "/", label: "Products" },
-    { href: "/", label: "About" },
-    { href: "/", label: "Contact" },
-    { href: "/", label: "Blog" },
-    { href: "/", label: "Dashboard" },
-    { href: "/", label: "Cart" },
-  ],
 
-  MobileLinks: [
-    { href: "/login", label: "Login" },
-    { href: "/register", label: "Register" },
-  ],
-};
+type  links = {
+  href: string,
+  label: string,
+}
 
-export default function Header(): JSX.Element {
+type logo = {
+  media_path: string,
+  media_alt: string,
+}
+
+type header = {
+  logo: logo,
+  links: links[],
+  MobileLinks: links[],
+}
+
+
+
+
+
+export default function Header({ data }: { data: header }): JSX.Element {
   const [visible, setVisible] = useState<boolean>(true);
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY <= 50);
+    const onScroll = () => setVisible(window.scrollY <= 70);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   });
@@ -48,7 +44,7 @@ export default function Header(): JSX.Element {
   return (
     <div
       className={cn(
-        "w-full border-b bg-gray-200 sticky top-0 z-50 transition-all duration-300 ease-in-out",
+        "w-full border-b bg-gray-200 sticky top-0 z-50 transition-all duration-200 ease-in-out",
         visible
           ? "opacity-100 translate-y-0"
           : "opacity-0 -translate-y-full pointer-events-none",
@@ -60,15 +56,15 @@ export default function Header(): JSX.Element {
           <Image
             width={50}
             height={50}
-            src={localData?.logo?.media}
-            alt={localData?.logo?.alt}
+            src={data?.logo?.media_path}
+            alt={data?.logo?.media_alt}
             className="w-auto max-w-[40px] h-auto md:max-w-[50px]  "
           />{" "}
         </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex flex-wrap items-center gap-6 mx-[12px]">
-          <NavLinks links={localData?.links} />
+          <NavLinks links={data?.links} />
         </nav>
 
         {/* Right Section */}
@@ -98,8 +94,8 @@ export default function Header(): JSX.Element {
               className="max-w-[220px] xl:max-w-[220px] bg-black/50 overflow-y-auto md:hidden"
             >
               <div className="flex flex-col justify-center items-start mx-6 gap-6 mt-12">
-                <NavLinks links={localData?.links} />
-                <NavLinks links={localData?.MobileLinks} />
+                <NavLinks links={data?.links} />
+                <NavLinks links={data?.MobileLinks} />
               </div>
             </SheetContent>
           </Sheet>

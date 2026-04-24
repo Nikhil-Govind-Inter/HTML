@@ -1,12 +1,10 @@
 
 'use client';
 
-
-
 type slider = {
     media: {
-        path: string,
-        alt: string,
+        media_path: string,
+        media_alt: string,
     },
     title: string
 }
@@ -78,8 +76,8 @@ export default function CardSlider({ cards }: { cards: slider[] }) {
 
                                         <Image
                                             fill
-                                            src={card?.media?.path}
-                                            alt={card?.media?.alt}
+                                            src={card?.media?.media_path}
+                                            alt={card?.media?.media_alt}
                                             className="w-full h-40 object-cover inset-0 absolute"
                                         />
                                     </div>

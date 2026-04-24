@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input";
+import { Heading } from "../utils/header";
 
 export default function Newsletter() {
   const [email, setEmail] = useState("");
@@ -20,12 +21,12 @@ export default function Newsletter() {
   };
 
   return (
-    <div className="w-full py-4">
+    <div className="w-full py-2">
       <div className="container">
       <div className="mx-auto px-4 md:flex items-center gap-[23px]">
-        <h3 className="text-white text-[12px] lg:text-[14px] xl:text-[16px] 2xl:text-[18px] font-normal mb-2">
+        <Heading as="h3" size="heading3" className="text-white font-normal mb-2">
           Subscribe to our Newsletter
-        </h3>
+        </Heading>
 
         <form
           onSubmit={handleSubmit}
