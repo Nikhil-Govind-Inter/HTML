@@ -54,15 +54,15 @@ export default function Header(): JSX.Element {
           : "opacity-0 -translate-y-full pointer-events-none",
       )}
     >
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+      <div className="container mx-auto flex h-[40px] md:h-[70px] items-center justify-between px-4">
         {/* Logo */}
-        <Link href="/" className="text-xl font-semibold">
+        <Link href="/">
           <Image
-            width={120}
-            height={120}
+            width={50}
+            height={50}
             src={localData?.logo?.media}
             alt={localData?.logo?.alt}
-            className="w-auto max-w-[70px]"
+            className="w-auto max-w-[40px] h-auto md:max-w-[50px]  "
           />{" "}
         </Link>
 

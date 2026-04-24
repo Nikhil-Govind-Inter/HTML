@@ -43,7 +43,7 @@ const localData = {
 
 export default function Footer(): JSX.Element {
   return (
-    <footer className="w-full bg-gray-900  text-gray-300" >
+    <footer className="w-full h-full bg-gray-900 text-gray-300" >
       <div className="container mx-auto">
         <div className="mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo & Address */}
